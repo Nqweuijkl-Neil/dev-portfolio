@@ -1,26 +1,52 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
-@theme {
-    --color-background: #0a0d14;
-    --color-foreground: #eef1f7;
+/* ── Dark theme ── */
+:root {
+    --bg: #0d0d0d;
+    --fg: #ccd6f6;
+    --card: #141414;
+    --primary: #00ff00; /* pure electric green */
+    --primary-fg: #000000; /* pure black — best contrast on #00ff00 */
+    --secondary: #1a1a1a;
+    --secondary-fg: #86efac;
+    --muted: #1f1f1f;
+    --muted-fg: #8892b0;
+    --border: #2a2a2a;
+    --highlight: #00ffcc;
+    --surface: #111111;
+}
+/* ── Light theme ── */
+html.light {
+    --bg: #e8fdf0; /* soft mint */
+    --fg: #0a0a0a; /* near-black — sharp on mint */
+    --card: #f4fef8; /* lighter mint for cards */
+    --primary: #00b300; /* deep electric green */
+    --primary-fg: #ffffff;
+    --secondary: #d0f5e3; /* slightly deeper mint for sections */
+    --secondary-fg: #006600; /* dark green labels */
+    --muted: #c8f0dc;
+    --muted-fg: #2d6e4e; /* muted forest green */
+    --border: #a8e6c4; /* soft mint border */
+    --highlight: #00ccaa; /* teal complement */
+    --surface: #dffaec; /* sits between bg and card */
+}
 
-    --color-card: #0f1522;
-
-    --color-primary: #8b7bff;
-    --color-primary-foreground: #0b0816;
-
-    --color-secondary: #141c2e;
-    --color-secondary-foreground: #b6adff;
-
-    --color-muted: #1a2236;
-    --color-muted-foreground: #9aa6bf;
-
-    --color-border: #202a42;
-
+/* ── Tell Tailwind to reference CSS vars (enables dynamic theming) ── */
+@theme inline {
+    --color-background: var(--bg);
+    --color-foreground: var(--fg);
+    --color-card: var(--card);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-fg);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-fg);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-fg);
+    --color-border: var(--border);
+    --color-highlight: var(--highlight);
+    --color-surface: var(--surface);
     --radius: 0.85rem;
-
-    --color-highlight: #35d3ff;
-    --color-surface: #101a2b;
 }
 
 @layer base {
@@ -36,6 +62,12 @@
 }
 
 @layer components {
+    .font-code {
+        font-family: "Fira Code", monospace;
+        font-feature-settings:
+            "liga" 1,
+            "calt" 1; /* enables ligatures */
+    }
     .glass {
         background-color: color-mix(
             in srgb,
@@ -50,12 +82,12 @@
     .glass-strong {
         background-color: color-mix(
             in srgb,
-            var(--color-surface) 80%,
+            var(--color-surface) 90%,
             transparent
         );
-        backdrop-filter: blur(16px);
+        backdrop-filter: blur(20px);
         border: none;
-        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
     }
 
     .font-serif {
@@ -63,14 +95,14 @@
     }
     .glow-text {
         text-shadow: 0 0 30px
-            color-mix(in srgb, var(--color-primary) 50%, transparent);
+            color-mix(in srgb, var(--color-primary) 60%, transparent);
     }
 
     .glow-border {
         box-shadow:
-            0 0 20px color-mix(in srgb, var(--color-primary) 20%, transparent),
+            0 0 20px color-mix(in srgb, var(--color-primary) 25%, transparent),
             inset 0 0 20px
-                color-mix(in srgb, var(--color-primary) 5%, transparent);
+                color-mix(in srgb, var(--color-primary) 8%, transparent);
     }
 }
 
@@ -122,6 +154,20 @@
         }
     }
 
+    @keyframes blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .animate-blink {
+        animation: blink 1s step-start infinite;
+    }
+
     .animate-fade-in {
         animation: fade-in 0.4s ease-in both;
     }
@@ -163,9 +209,14 @@
     }
 
     .animated-border:hover {
-        background-color: color-mix(in srgb, #26c4b8 15%, transparent);
+        background-color: color-mix(
+            in srgb,
+            var(--color-primary) 15%,
+            transparent
+        );
         backdrop-filter: blur(16px);
-        box-shadow: 0 0 20px color-mix(in srgb, #26c4b8 20%, transparent);
+        box-shadow: 0 0 20px
+            color-mix(in srgb, var(--color-primary) 20%, transparent);
     }
 
     @keyframes animated-border {
@@ -177,7 +228,16 @@
         }
     }
 
-    .group:hover .animated-border-path {
-        animation: animated-border 0.5s linear infinite;
+    @media (max-width: 767px) {
+        .animated-border-path {
+            animation: animated-border 1.5s linear infinite;
+        }
+    }
+
+    /* Desktop — hover only */
+    @media (min-width: 768px) {
+        .group:hover .animated-border-path {
+            animation: animated-border 0.5s linear infinite;
+        }
     }
 }

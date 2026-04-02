@@ -1,6 +1,8 @@
 import { Button } from "@/components/Button";
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/hooks/useTheme";
+import { HamburgerButton } from "@/components/HamburgerButton";
 
 const navLinks = [
     {
@@ -24,6 +26,7 @@ const navLinks = [
 export const Navbar = () => {
     const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const { isDark, toggleTheme } = useTheme();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -53,15 +56,24 @@ export const Navbar = () => {
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 transition-all duration-500 ${isScrolled ? "glass-strong py-3" : "bg-transparent py-5"} z-50`}
+            className={`fixed top-0 left-0 right-0 transition-all duration-500 ${
+                isScrolled || isMobileMenuActive
+                    ? "glass-strong"
+                    : "bg-transparent"
+            } ${isMobileMenuActive ? "py-3" : isScrolled ? "py-3" : "py-5"} z-50`}
         >
             <nav className="container mx-auto px-6 flex items-center justify-between">
+                {/* Logo */}
                 <a
                     href="#"
-                    className="text-xl font-bold tracking-tight hover:text-primary"
+                    className="font-code text-xl font-semibold tracking-tight hover:text-primary flex items-center"
                 >
-                    &lt; <span className="tracking-widest">Neil </span>/&gt;
-                    <span className="text-primary">.</span>
+                    <span className="text-muted-foreground">&lt;</span>
+                    <span className="mx-1 text-foreground tracking-widest">
+                        Neil
+                    </span>
+                    <span className="text-muted-foreground">/&gt;</span>
+                    <span className="text-primary animate-blink ml-0.5">_</span>
                 </a>
 
                 {/* Desktop Nav */}
@@ -79,49 +91,69 @@ export const Navbar = () => {
                     </div>
                 </div>
 
-                {/* CTA Button */}
-                <div className="hidden md:block">
+                {/* Desktop right side */}
+                <div className="hidden md:flex items-center gap-3">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300 cursor-pointer"
+                        aria-label="Toggle theme"
+                    >
+                        {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                    </button>
                     <Button
                         className="cursor-pointer"
                         size="sm"
-                        onClick={() => handleNavClick("#contact")} // reuse activeNav handler
+                        onClick={() => handleNavClick("#contact")}
                     >
                         Contact Me
                     </Button>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden p-2 text-foreground cursor-pointer focus:outline-none"
-                    onClick={() => setIsMobileMenuActive((prev) => !prev)}
-                >
-                    {isMobileMenuActive ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                {/* Mobile right side */}
+                <div className="md:hidden flex items-center gap-2">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all cursor-pointer"
+                        aria-label="Toggle theme"
+                    >
+                        {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                    </button>
+                    <HamburgerButton
+                        isOpen={isMobileMenuActive}
+                        onClick={() => setIsMobileMenuActive((prev) => !prev)}
+                    />
+                </div>
             </nav>
-            {/* Mobile Menu */}
 
-            {isMobileMenuActive && (
-                <div className="md:hidden glass-strong animate-fade-in">
-                    <div className="container mx-auto p-6 flex flex-col gap-4 items-center">
-                        {navLinks.map((link, index) => (
-                            <a
-                                href={link.href}
-                                key={index}
-                                onClick={() => setIsMobileMenuActive(false)}
-                                className="text-lg text-muted-foreground hover:text-foreground py-2"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+            {/* Mobile Menu — expands inside the header */}
+            <div
+                className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+                    isMobileMenuActive
+                        ? "max-h-96 opacity-100"
+                        : "max-h-0 opacity-0"
+                }`}
+            >
+                <div className="container mx-auto px-6 pt-2 pb-4 flex flex-col gap-1 border-t border-border/20 mt-3">
+                    {navLinks.map((link, index) => (
+                        <a
+                            href={link.href}
+                            key={index}
+                            onClick={() => setIsMobileMenuActive(false)}
+                            className="text-base text-muted-foreground hover:text-foreground hover:bg-surface px-4 py-3 rounded-xl transition-colors"
+                        >
+                            {link.label}
+                        </a>
+                    ))}
+                    <div className="pt-2">
                         <Button
-                            className="cursor-pointer"
-                            onClick={() => handleNavClick("#contact")} // reuse handler
+                            className="cursor-pointer w-full"
+                            onClick={() => handleNavClick("#contact")}
                         >
                             Contact Me
                         </Button>
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 };

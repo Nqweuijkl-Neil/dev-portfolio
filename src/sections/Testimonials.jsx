@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const testimonials = [
     {
@@ -36,18 +36,41 @@ const testimonials = [
 
 export const Testimonials = () => {
     const [activeIdx, setActiveIdx] = useState(0);
+    const [paused, setPaused] = useState(false);
+    const [animating, setAnimating] = useState(false);
+    const [direction, setDirection] = useState("next");
 
-    const next = () => {
-        setActiveIdx((prev) => (prev + 1) % testimonials.length);
-    };
+    const goTo = useCallback((newIdx, dir = "next") => {
+        setDirection(dir);
+        setAnimating(true);
+        setTimeout(() => {
+            setActiveIdx(newIdx);
+            setAnimating(false);
+        }, 300);
+    }, []);
+
+    const next = useCallback(() => {
+        goTo((activeIdx + 1) % testimonials.length, "next");
+    }, [activeIdx, goTo]);
 
     const previous = () => {
-        setActiveIdx(
-            (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+        goTo(
+            (activeIdx - 1 + testimonials.length) % testimonials.length,
+            "prev",
         );
     };
+
+    useEffect(() => {
+        if (paused) return;
+        const timer = setInterval(next, 2000);
+        return () => clearInterval(timer);
+    }, [paused, next]);
+
     return (
-        <section id="testimonials" className="py-32 relative overflow-hidden">
+        <section
+            id="testimonials"
+            className="py-25 lg:py-30 relative overflow-hidden"
+        >
             <div
                 className="absolute top-1/2 left-1/2 w-200 h-200 bg-primary/5
         rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
@@ -60,7 +83,7 @@ export const Testimonials = () => {
                     </span>
                     <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
                         Kind words from{" "}
-                        <span className="font-serif italic font-normal text-white">
+                        <span className="font-serif italic font-normal text-foreground">
                             amazing people.
                         </span>
                     </h2>
@@ -70,7 +93,19 @@ export const Testimonials = () => {
                 <div className="max-w-4xl mx-auto">
                     <div className="relative">
                         {/* Main Testimonial */}
-                        <div className="glass p-8 rounded-3xl md:p-12 glow-border animate-fade-in animation-delay-200">
+                        <div
+                            className="glass p-8 rounded-3xl md:p-12 glow-border"
+                            onMouseEnter={() => setPaused(true)}
+                            onMouseLeave={() => setPaused(false)}
+                            style={{
+                                transition:
+                                    "opacity 300ms ease, transform 300ms ease",
+                                opacity: animating ? 0 : 1,
+                                transform: animating
+                                    ? `translateX(${direction === "next" ? "-24px" : "24px"})`
+                                    : "translateX(0)",
+                            }}
+                        >
                             <div className="absolute -top-4 left-8 w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                                 <Quote className="w-6 h-6 text-primary-foreground" />
                             </div>
@@ -108,7 +143,14 @@ export const Testimonials = () => {
                             <div className="flex gap-2">
                                 {testimonials.map((_, idx) => (
                                     <button
-                                        onClick={() => setActiveIdx(idx)}
+                                        onClick={() =>
+                                            goTo(
+                                                idx,
+                                                idx > activeIdx
+                                                    ? "next"
+                                                    : "prev",
+                                            )
+                                        }
                                         key={idx}
                                         className={`w-2 h-2 rounded-full transition-all cursor-pointer duration-300 ${
                                             idx === activeIdx

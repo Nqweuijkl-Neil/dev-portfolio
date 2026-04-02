@@ -56,7 +56,7 @@ export const Hero = () => {
                         key={i}
                         className="absolute w-1.5 h-1.5 rounded-full opacity-60"
                         style={{
-                            backgroundColor: "#20B2A6",
+                            backgroundColor: "var(--color-primary)",
                             left: `${Math.random() * 100}%`,
                             top: `${Math.random() * 100}%`,
                             animation: `slow-drift ${
@@ -69,7 +69,7 @@ export const Hero = () => {
             </div>
 
             {/* Content */}
-            <div className="container mx-auto px-6 pt-32 pb-20 relative z-1">
+            <div className="container mx-auto px-6 pt-25 lg:pt-32 pb-20 relative z-1">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-8">
@@ -92,7 +92,7 @@ export const Hero = () => {
                                 <br />
                                 Code comes with
                                 <br />
-                                <span className="font-serif italic font-normal text-white">
+                                <span className="font-serif italic font-normal text-foreground">
                                     {" "}
                                     effort. I do both.
                                 </span>
@@ -184,7 +184,7 @@ export const Hero = () => {
                         <div className="flex animate-marquee">
                             {[...skills, ...skills].map((skill, i) => (
                                 <div key={i} className="shrink-0 px-8 py-4">
-                                    <span className="text-xl italic font-semibold text-muted-foreground/50 hover:text-muted-foreground cursor-default transition-colors">
+                                    <span className="text-xl italic font-semibold text-muted-foreground/50 hover:text-primary cursor-default transition-colors">
                                         {skill}
                                     </span>
                                 </div>
@@ -193,7 +193,7 @@ export const Hero = () => {
                     </div>
                 </div>
 
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800">
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800 hidden lg:block">
                     <a
                         href="#about"
                         className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"

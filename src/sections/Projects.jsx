@@ -73,7 +73,10 @@ const githubProjects = "https://github.com/NeilNyx?tab=repositories";
 
 export const Projects = () => {
     return (
-        <section id="projects" className="py-32 relative overflow-hidden">
+        <section
+            id="projects"
+            className="py-25 lg:py-30 relative overflow-hidden"
+        >
             <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
             <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
             <div className="container mx-auto px-6 relative z-10">
@@ -83,8 +86,8 @@ export const Projects = () => {
                         Featured Work
                     </span>
                     <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
-                        Projects that``
-                        <span className="font-serif italic font-normal text-white">
+                        Projects that
+                        <span className="font-serif italic font-normal text-foreground">
                             {" "}
                             make an impact.
                         </span>
@@ -113,7 +116,7 @@ export const Projects = () => {
                                 />
                                 <div className="absolute inset-0 bg-linear-to-t from-card to-transparent opacity-60" />
                                 {/* Overlay Links */}
-                                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
                                     <a
                                         href={project.link}
                                         target="_blank"

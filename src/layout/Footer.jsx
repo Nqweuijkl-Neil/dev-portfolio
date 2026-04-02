@@ -32,11 +32,16 @@ export const Footer = () => {
                     <div className="text-center md:text-left">
                         <a
                             href="#"
-                            className="text-xl font-bold tracking-tight"
+                            className="font-code text-xl font-semibold tracking-tight hover:text-primary flex items-center justify-center md:justify-start"
                         >
-                            &lt; <span className="tracking-widest">Neil </span>
-                            /&gt;
-                            <span className="text-primary">.</span>
+                            <span className="text-muted-foreground">&lt;</span>
+                            <span className="mx-1 text-foreground tracking-widest">
+                                Neil
+                            </span>
+                            <span className="text-muted-foreground">/&gt;</span>
+                            <span className="text-primary animate-blink ml-0.5">
+                                _
+                            </span>
                         </a>
                         <p className="text-sm text-muted-foreground mt-2">
                             © {currentYear} Neil Patrick Morano. All rights
