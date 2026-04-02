@@ -5,31 +5,31 @@ const testimonials = [
     {
         quote: "Neil’s passion for web development is undeniable. He consistently puts in the time to learn, build, and improve, and it shows in the quality of the projects he creates.",
         author: "Charles Gemuel Banigon",
-        role: "Web Developer / Friend",
+        role: "Software Developer | Software Development",
         avatar: "/testimonial pic/charles.jpg",
     },
     {
         quote: "What I admire about Neil is his dedication. Even with a busy schedule, he makes time to sharpen his skills and push himself to grow in tech.",
         author: "Eric Daragay",
-        role: "Friend",
+        role: "Regional Operations Executive | Financial Tech",
         avatar: "/testimonial pic/eric.jpg",
     },
     {
         quote: "Neil is someone who genuinely enjoys what he does. He’s always curious, always learning, and never settles for just ‘good enough’.",
         author: "Leslyne Montemayor",
-        role: "Friend",
+        role: "Tech Support | Education Tech ",
         avatar: "/testimonial pic/leslyne.jpg",
     },
     {
         quote: "I worked with Neil before, and he’s very reliable and detail-oriented. He takes ownership of his work and makes sure things are done right.",
         author: "Christian Jay Valiente",
-        role: "Friend / Former Workmate at SL TEMPS",
+        role: "Delivery Support Specialist | IT Services & Consulting",
         avatar: "/testimonial pic/cj.jpg",
     },
     {
         quote: "Neil is very driven and focused on his goals. When he sets his mind to something, he follows through and continuously improves himself.",
         author: "Joan Nacario",
-        role: "Friend",
+        role: "Inventory Custodian | E-commerce",
         avatar: "/testimonial pic/joan.jpg",
     },
 ];
