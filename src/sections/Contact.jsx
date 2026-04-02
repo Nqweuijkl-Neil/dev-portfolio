@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/Button";
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 
 const contactInfo = [
     {
@@ -49,26 +48,23 @@ export const Contact = () => {
         setIsLoading(true);
         setSubmitStatus({ type: null, message: "" });
         try {
-            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-            if (!serviceId || !templateId || !publicKey) {
-                throw new Error(
-                    "EmailJS configuration is missing. Please check your environment variables.",
-                );
-            }
-
-            await emailjs.send(
-                serviceId,
-                templateId,
-                {
+            const response = await fetch("/api/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
                     name: formData.name,
                     email: formData.email,
                     message: formData.message,
-                },
-                publicKey,
-            );
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.error || "Failed to send message.",
+                );
+            }
 
             setSubmitStatus({
                 type: "success",
@@ -77,11 +73,11 @@ export const Contact = () => {
             });
             setFormData({ name: "", email: "", message: "" });
         } catch (err) {
-            console.error("EmailJS error:", err);
+            console.error("Send email error:", err);
             setSubmitStatus({
                 type: "error",
                 message:
-                    err.text ||
+                    err.message ||
                     "Failed to send message. Please try again later.",
             });
         } finally {
