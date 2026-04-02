@@ -4,7 +4,7 @@ const experiences = [
         role: "Future Web Developer",
         company: "Self-Learning & Projects",
         description:
-            "Actively learning and building projects in full-stack web development, focusing on front-end and back-end technologies. Working with ReactJS, NextJS, TypeScript, PHP frameworks, and database management to create responsive, interactive web applications while following modern best practices and building a professional portfolio.",
+            "Actively focused on frontend development, currently learning ReactJS to build responsive, interactive web applications. Working toward becoming a full-stack developer by gradually expanding into backend technologies and modern tools like NextJS and TypeScript, while building a professional portfolio of clean, maintainable, and user-friendly projects.",
         skills: [
             "HTML",
             "CSS",
