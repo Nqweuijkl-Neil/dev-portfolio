@@ -94,7 +94,7 @@ export const Testimonials = () => {
                     <div className="relative">
                         {/* Main Testimonial */}
                         <div
-                            className="glass p-8 rounded-3xl md:p-12 glow-border"
+                            className="glass p-8 rounded-3xl md:p-12 glow-border relative flex flex-col justify-between h-90 md:h-75"
                             onMouseEnter={() => setPaused(true)}
                             onMouseLeave={() => setPaused(false)}
                             style={{
@@ -106,6 +106,8 @@ export const Testimonials = () => {
                                     : "translateX(0)",
                             }}
                         >
+                            <Quote className="absolute -bottom-16 -right-4 w-75 h-75 lg:w-96 lg:h-96 text-primary/10 select-none pointer-events-none z-0 rotate-180" />
+
                             <div className="absolute -top-4 left-8 w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                                 <Quote className="w-6 h-6 text-primary-foreground" />
                             </div>
