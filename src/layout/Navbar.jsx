@@ -34,6 +34,23 @@ export const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth >= 768) setIsMobileMenuActive(false);
+        }
+        window.addEventListener("resize", handleResize);
+        handleResize();
+    }, []);
+
+    // Function to handle nav link click
+    const handleNavClick = (href) => {
+        const section = document.querySelector(href);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+        setIsMobileMenuActive(false); // close mobile menu if open
+    };
+
     return (
         <header
             className={`fixed top-0 left-0 right-0 transition-all duration-500 ${isScrolled ? "glass-strong py-3" : "bg-transparent py-5"} z-50`}
@@ -43,7 +60,8 @@ export const Navbar = () => {
                     href="#"
                     className="text-xl font-bold tracking-tight hover:text-primary"
                 >
-                    neilpatrickmorano<span className="text-primary">.</span>
+                    &lt; <span className="tracking-widest">Neil </span>/&gt;
+                    <span className="text-primary">.</span>
                 </a>
 
                 {/* Desktop Nav */}
@@ -63,7 +81,13 @@ export const Navbar = () => {
 
                 {/* CTA Button */}
                 <div className="hidden md:block">
-                    <Button size="sm">Contact Me</Button>
+                    <Button
+                        className="cursor-pointer"
+                        size="sm"
+                        onClick={() => handleNavClick("#contact")} // reuse activeNav handler
+                    >
+                        Contact Me
+                    </Button>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -83,12 +107,18 @@ export const Navbar = () => {
                             <a
                                 href={link.href}
                                 key={index}
+                                onClick={() => setIsMobileMenuActive(false)}
                                 className="text-lg text-muted-foreground hover:text-foreground py-2"
                             >
                                 {link.label}
                             </a>
                         ))}
-                        <Button>Contact Me</Button>
+                        <Button
+                            className="cursor-pointer"
+                            onClick={() => handleNavClick("#contact")} // reuse handler
+                        >
+                            Contact Me
+                        </Button>
                     </div>
                 </div>
             )}
