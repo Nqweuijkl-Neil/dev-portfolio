@@ -19,7 +19,7 @@ const projects = [
             "Styled-Components",
             "Supabase",
         ],
-        link: "https://hidden-grove-neil.netlify.app",
+        link: "https://neil-hidden-grove.vercel.app/",
         github: "https://github.com/NeilNyx/The-Hidden-Grove",
     },
     {
@@ -34,7 +34,7 @@ const projects = [
             "React Router",
             "API Integration",
         ],
-        link: "https://pizzarush-neil.netlify.app",
+        link: "https://neil-pizzarush.vercel.app/",
         github: "https://github.com/NeilNyx/PizzaRush",
     },
     {
@@ -50,7 +50,7 @@ const projects = [
             "React Router",
             "Leaflet",
         ],
-        link: "https://pintrail-neil.netlify.app",
+        link: "https://neil-pintrail.vercel.app/",
         github: "https://github.com/NeilNyx/pintrail-neil",
     },
     {
@@ -65,7 +65,7 @@ const projects = [
             "useEffect",
             "API Integration",
         ],
-        link: "https://movielibrary-neil.netlify.app",
+        link: "https://neil-movielibrary.vercel.app/",
         github: "https://github.com/NeilNyx/movielibrary-neil",
     },
 ];
